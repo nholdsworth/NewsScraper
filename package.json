@@ -1,0 +1,34 @@
+{
+  "name": "newsscraper",
+  "version": "1.0.0",
+  "description": "Trilogy_Bootcamp_Bellevue_2018-19_WK_18_HW",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nholdsworth/NewsScraper.git"
+  },
+  "keywords": [
+    "News",
+    "Scraper",
+    "Mongoose",
+    "MongoDB",
+    "Cheerio"
+  ],
+  "author": "Nathaniel Holdsworth",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nholdsworth/NewsScraper/issues"
+  },
+  "homepage": "https://github.com/nholdsworth/NewsScraper#readme",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "cheerio": "^1.0.0-rc.2",
+    "express": "^4.16.4",
+    "express-handlebars": "^3.0.2",
+    "mongoose": "^5.4.15",
+    "morgan": "^1.9.1"
+  }
+}
