@@ -35,7 +35,7 @@ mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 // Routes
 
 // A GET route for scraping the paris review website
-app.get("/scrape", function (req, res) {
+app.get("/", function (req, res) {
     // First, we grab the body of the html with axios
     axios.get(`https://www.theparisreview.org/poetry`).then(function (response) {
         // console.log(response.data);
@@ -89,7 +89,7 @@ app.get("/scrape", function (req, res) {
         });
 
         // Send a message to the client
-        res.send("Scrape Complete");
+        res.redner('index');
     });
 });
 
@@ -105,7 +105,7 @@ app.get("/poems", function (req, res) {
             // If an error occurred, send it to the client
             res.json(err);
         });
-});
+});kjh
 
 // // Route for grabbing a specific Article by id, populate it with it's note
 // app.get("/articles/:id", function (req, res) {
