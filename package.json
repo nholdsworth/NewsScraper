@@ -4,6 +4,7 @@
   "description": "Trilogy_Bootcamp_Bellevue_2018-19_WK_18_HW",
   "main": "server.js",
   "scripts": {
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

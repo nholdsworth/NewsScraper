@@ -25,7 +25,7 @@ $(document).ready(function () {
                 .append(body);
 
             // FIXME:
-            card.data("_id", currentPoem._id);
+            card.data(`_id`, currentPoem.ObjectId);
 
             $(`.poetry-container`)
                 .append(card);
