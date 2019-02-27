@@ -35,7 +35,7 @@ mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 // Routes
 
 // A GET route for scraping the paris review website
-app.get("/", function (req, res) {
+app.get("/scrape", function (req, res) {
     // First, we grab the body of the html with axios
     axios.get(`https://www.theparisreview.org/poetry`).then(function (response) {
         // console.log(response.data);
@@ -89,39 +89,39 @@ app.get("/", function (req, res) {
         });
 
         // Send a message to the client
-        res.redner('index');
+        res.send("Scrape Complete");
     });
 });
 
-// Route for getting all Articles from the db
+// Route for getting all Poems from the db
 app.get("/poems", function (req, res) {
     // Grab every document in the Articles collection
     db.Poem.find({})
         .then(function (dbPoem) {
-            // If we were able to successfully find Articles, send them back to the client
+            // If we were able to successfully find Poems, send them back to the client
             res.json(dbPoem);
         })
         .catch(function (err) {
             // If an error occurred, send it to the client
             res.json(err);
         });
-});kjh
+});
 
-// // Route for grabbing a specific Article by id, populate it with it's note
-// app.get("/articles/:id", function (req, res) {
-//     // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
-//     db.Article.findOne({ _id: req.params.id })
-//         // ..and populate all of the notes associated with it
-//         .populate("note")
-//         .then(function (dbArticle) {
-//             // If we were able to successfully find an Article with the given id, send it back to the client
-//             res.json(dbArticle);
-//         })
-//         .catch(function (err) {
-//             // If an error occurred, send it to the client
-//             res.json(err);
-//         });
-// });
+// Route for grabbing a specific Poem by id, populate it with it's note
+app.get(`/poems/:id`, function (req, res) {
+    // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
+    db.Poem.findOne({ _id: req.params.id })
+        // ..and populate all of the notes associated with it
+        // .populate("note")
+        .then(function (dbPoem) {
+            // If we were able to successfully find a Poem with the given id, send it back to the client
+            res.json(dbPoem);
+        })
+        .catch(function (err) {
+            // If an error occurred, send it to the client
+            res.json(err);
+        });
+});
 
 // // Route for saving/updating an Article's associated Note
 // app.post("/articles/:id", function (req, res) {
