@@ -35,19 +35,19 @@ $(document).ready(function () {
 
     });
 
-    $(document).on(`click`, `.card`, function () {
+    $(document).on('click', '.card', function () {
 
         // $(`note`).empty();
 
-        let thisId = $(this).attr("data-id");
+        let thisID = $(this).attr('data-id');
         // This prints to the console with the correct id 
-        console.log(`this is the id line 41 app.js: `, thisId);
+        console.log(`this is the id line 41 app.js: `, thisID);
 
-        axios.get(`/poems/${thisId}`).then(function (response) {
+        axios.get(`/poems/${thisID}`).then(function (response) {
             let thisPoem = response.data
-            console.log(thisPoem);
+            console.log(`this is the console.log on line 48 in app.js`, thisPoem);
 
-            $(".note-container").append("<h2>" + thisPoem.title + "</h2>");
+            $(".note-container").append(`<h2>${thisPoem.title}</h2>`);
             // An input to enter a new title
             $(".note-container").append("<input id='titleinput' name='title' >");
             // A textarea to add a new note body
@@ -55,29 +55,45 @@ $(document).ready(function () {
             // A button to submit a new note, with the id of the article saved to it
             $(".note-container").append("<button data-id='" + thisPoem._id + "' id='savenote'>Save Note</button>");
 
+            
+            let poemNote = thisPoem.note;
+            console.log(`this is poemNote = thisPoem.note checking to see if the poemNote variable is working:`, poemNote);
             // If there's a note in the article
-            if (thisPoem.note) {
+            if (poemNote) {
+                // FIXME: this is coming back undfined
+                console.log(poemNote.title);
                 // Place the title of the note in the title input
-                $("#titleinput").val(thisPoem.note.title);
+                $('#titleinput').val(poemNote.title);
                 // Place the body of the note in the body textarea
-                $("#bodyinput").val(thisPoem.note.body);
+                $('#bodyinput').val(poemNote.body);
             }
         })
 
+        $(document).on('click', '#savenote', function () {
+
+            let thisID = $(this).attr('data-id')
+
+            console.log(`this is the console log from the save button ${thisID}`);
+
+            axios.post(`/poems/${thisID}`, {
+                // Value taken from note textarea
+                title: $('#titleinput').val(),
+                // Value taken from note textarea
+                body: $('#bodyinput').val()
+            })
+                .then(function (response) {
+                    // FIXME:This is not coming back how I expect.  I expect to see the note
+                    console.log(`this is the axios.post on line 81 in app.js: `, response.data);
+                    // Empty the notes section
+                    $('#notes').empty();
+                });
+
+            // Also, remove the values entered in the input and textarea for note entry
+            $('#titleinput').val("");
+            $('#bodyinput').val("");
+        })
+
     })
-
-    // $(document).on(`click`, `.card`, () => {
-
-    //     $(`notes`).empty();
-
-    //     let thisId = $(this).attr(`data-id`);
-    //     console.log(`this is the id line 41 app.js: `, thisId);
-
-    //     axios.get(`/poems/:id`).then((response) => {
-    //         console.log(response.data);
-    //     })
-
-    // })
 
 })
 

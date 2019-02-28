@@ -2,10 +2,12 @@ const mongoose = require(`mongoose`);
 const Schema = mongoose.Schema;
 
 const PoemSchema = new Schema ({
+
     title: {
         type: String,
         required: true
     },
+
     link: {
         type: String,
         required: true
@@ -20,14 +22,17 @@ const PoemSchema = new Schema ({
         type: String,
         required: false
     },
+
     excerpt: {
         type: String,
         required: true
     },
+
     note: {
         type: Schema.Types.ObjectId,
-        ref: 'note'
+        ref: 'Note'
     }
+    
 });
 
 const Poem = mongoose.model('Poem', PoemSchema)

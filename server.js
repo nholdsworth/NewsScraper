@@ -42,42 +42,42 @@ app.get("/scrape", function (req, res) {
         // Then, we load that into cheerio and save it to $ for a shorthand selector
         const $ = cheerio.load(response.data);
 
-        // Now, we grab every a tag inside an article tag iterate through the elements to find the ones we are looking for and save them into the result object and then save it to mongoDB
+        // FIXME: need help understanding the i and element arguments.  Now, we grab every a tag inside an article tag iterate through the elements to find the ones we are looking for and save them into the result object and then save it to mongoDB
         $('article a').each(function (i, element) {
             // Save an empty result object
-            let result = {};
+            let poem = {};
 
-            result.title = $(this)
+            poem.title = $(this)
                 .find('header')
                 .find('section')
                 .find('h1')
                 .text();
 
-            result.link = $(this)
+            poem.link = $(this)
                 .attr('href');
 
-            result.author = $(this)
+            poem.author = $(this)
                 .find('header')
                 .find('section')
                 .find('address')
                 .text();
 
-            result.time = $(this)
+            poem.time = $(this)
                 .find('header')
                 .find('section')
                 .find('time')
                 .text();
 
-            result.excerpt = $(this)
+            poem.excerpt = $(this)
                 .find('header')
                 .find('section')
                 .find('div')
                 .text();
 
-            console.log(`This is your .each POEM object building function: `, result);
+            console.log(`This is your .each POEM object building function: `, poem);
 
             // Create a new Article using the `result` object built from scraping
-            db.Poem.create(result)
+            db.Poem.create(poem)
                 .then(function (dbPoem) {
                     // View the added result in the console
                     console.log(dbPoem);
@@ -111,9 +111,10 @@ app.get("/poems", function (req, res) {
 app.get(`/poems/:id`, function (req, res) {
     // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
     db.Poem.findOne({ _id: req.params.id })
-        // ..and populate all of the notes associated with it
-        // .populate("note")
+        // TODO: remember that the association between Poem and Note is created but not invoked until we call .populate('note') which then provides access to the data in the notes collection...
+        .populate('note')
         .then(function (dbPoem) {
+            console.log(dbPoem);
             // If we were able to successfully find a Poem with the given id, send it back to the client
             res.json(dbPoem);
         })
@@ -123,25 +124,25 @@ app.get(`/poems/:id`, function (req, res) {
         });
 });
 
-// // Route for saving/updating an Article's associated Note
-// app.post("/articles/:id", function (req, res) {
-//     // Create a new note and pass the req.body to the entry
-//     db.Note.create(req.body)
-//         .then(function (dbNote) {
-//             // If a Note was created successfully, find one Article with an `_id` equal to `req.params.id`. Update the Article to be associated with the new Note
-//             // { new: true } tells the query that we want it to return the updated User -- it returns the original by default
-//             // Since our mongoose query returns a promise, we can chain another `.then` which receives the result of the query
-//             return db.Article.findOneAndUpdate({ _id: req.params.id }, { note: dbNote._id }, { new: true });
-//         })
-//         .then(function (dbArticle) {
-//             // If we were able to successfully update an Article, send it back to the client
-//             res.json(dbArticle);
-//         })
-//         .catch(function (err) {
-//             // If an error occurred, send it to the client
-//             res.json(err);
-//         });
-// });
+// Route for saving/updating a Poem's note
+app.post("/poems/:id", function (req, res) {
+    // Create a new note and pass the req.body to the entry
+    db.Note.create(req.body)
+        .then(function (dbNote) {
+            // If a Note was created successfully, find one Article with an `_id` equal to `req.params.id`. Update the Article to be associated with the new Note
+            // { new: true } tells the query that we want it to return the updated User -- it returns the original by default
+            // Since our mongoose query returns a promise, we can chain another `.then` which receives the result of the query
+            return db.Poem.findOneAndUpdate({ _id: req.params.id }, { note: dbNote._id }, { new: true });
+        })
+        .then(function (dbPoem) {
+            // If we were able to successfully update an Article, send it back to the client
+            res.json(dbPoem);
+        })
+        .catch(function (err) {
+            // If an error occurred, send it to the client
+            res.json(err);
+        });
+});
 
 // Start the server
 app.listen(PORT, function () {
