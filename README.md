@@ -9,7 +9,7 @@
 ![Screenshot software](poemscraperscreenshot.png "screenshot software")
 
 ## Link to github
-* [Version 1.0] https://github.com/nholdsworth/NewsScraper(https://github.com/username/sw-name/archive/master.zip)
+* [Version 0.7] https://github.com/nholdsworth/NewsScraper(https://github.com/username/sw-name/archive/master.zip)
 
 
 ## Usage
@@ -22,7 +22,8 @@
     Then from the terminal start up the server in node
     and go to localhost:3000 in the browser.
 
-    This app is also deployed on Heroku and may be used online by going to:  * https://boiling-reef-44186.herokuapp.com/
+    This app is also deployed on Heroku and may be used online by going to
+https://boiling-reef-44186.herokuapp.com/
 
     all you do is click the get poems button to look for all available poems that are currently not already saved into the database.  
 
@@ -37,7 +38,7 @@
 ## Contributors
 
 ### Contributors on GitHub
-* [Contributors](https://github.com/nholdsworth/NewsScraper/graphs/contributors)
+* [Nathaniel Holdsworth](https://github.com/nholdsworth/NewsScraper/graphs/contributors)
 
 ### Third party libraries
 
