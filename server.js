@@ -77,8 +77,6 @@ app.get("/scrape", function (req, res) {
 
             console.log(`This is your .each POEM object building function: `, poem);
             
-            // TODO:create logic to see if this article already exists or not before creating an object in the database 
-
             // Create a new Article using the `result` object built from scraping
             db.Poem.create(poem)
                 .then(function (dbPoem) {
@@ -92,7 +90,8 @@ app.get("/scrape", function (req, res) {
         });
 
         // Send a message to the client
-        res.send("Scrape Complete");
+        res.redirect('/');
+        
     });
 });
 

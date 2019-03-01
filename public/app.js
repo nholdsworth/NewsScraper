@@ -3,46 +3,40 @@ $(document).ready(function () {
 
     let poetryContainer = $(`.poetry-container`);
 
-    function initPage() {
+    $.getJSON('/poems', function (poemData) {
+        // poetryContainer.empty()
+        // if ()
+        let allPoems = poemData.map(function (currentPoem) {
 
-        $.getJSON('/poems', function (poemData) {
-            poetryContainer.empty()
-            if ()
-            let allPoems = poemData.map(function (currentPoem) {
+            console.log(currentPoem);
 
-                console.log(currentPoem);
+            let title = $(`<h5 class="card-title"></h5>`)
+                .text(`Title: ${currentPoem.title}`);
 
-                let title = $(`<h5 class="card-title"></h5>`)
-                    .text(`Title: ${currentPoem.title}`);
+            let titleLink = $(`<a href='https://www.theparisreview.org${currentPoem.link}'>`)
+                .append(title);
 
-                let titleLink = $(`<a href='https://www.theparisreview.org${currentPoem.link}'>`)
-                    .append(title);
+            let author = $(`<h6 class="card-subtitle mb-2 text-muted"></h6>`)
+                .text(`${currentPoem.author}`);
 
-                let author = $(`<h6 class="card-subtitle mb-2 text-muted"></h6>`)
-                    .text(`${currentPoem.author}`);
+            let excerpt = $(`<p class="card-text">`)
+                .text(currentPoem.excerpt);
 
-                let excerpt = $(`<p class="card-text">`)
-                    .text(currentPoem.excerpt);
+            let body = $(`<div class="card-body">`)
+                .append(titleLink, author, excerpt);
 
-                let body = $(`<div class="card-body">`)
-                    .append(titleLink, author, excerpt);
+            let id = currentPoem._id;
+            console.log(id);
 
-                let id = currentPoem._id;
-                console.log(id);
+            let card = $(`<div class="card" style="width: 18rem;" data-id=${id}>`)
+                .append(body);
 
-                let card = $(`<div class="card" style="width: 18rem;" data-id=${id}>`)
-                    .append(body);
+            $(`.poetry-container`)
+                .append(card);
 
-                $(`.poetry-container`)
-                    .append(card);
+        })
 
-            })
-
-        });
-
-    }
-
-
+    });
 
     $(document).on('click', '.card', function () {
 

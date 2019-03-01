@@ -5,7 +5,9 @@ const PoemSchema = new Schema ({
 
     title: {
         type: String,
+        unique: true,
         required: true
+        
     },
 
     link: {
@@ -25,6 +27,7 @@ const PoemSchema = new Schema ({
 
     excerpt: {
         type: String,
+        unique: true,
         required: true
     },
 
@@ -32,7 +35,7 @@ const PoemSchema = new Schema ({
         type: Schema.Types.ObjectId,
         ref: 'Note'
     }
-    
+
 });
 
 const Poem = mongoose.model('Poem', PoemSchema)
