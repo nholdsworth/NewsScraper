@@ -70,33 +70,31 @@ $(document).ready(function () {
                 $('#bodyinput').val(poemNote.body);
             }
         })
-
-        $(document).on('click', '#savenote', function () {
-
-            let thisID = $(this).attr('data-id')
-
-            console.log(`this is the console log from the save button ${thisID}`);
-
-            axios.post(`/poems/${thisID}`, {
-                // Value taken from note textarea
-                title: $('#titleinput').val(),
-                // Value taken from note textarea
-                body: $('#bodyinput').val()
-            })
-                .then(function (response) {
-                    // FIXME:This is not coming back how I expect.  I expect to see the note
-                    console.log(`this is the axios.post on line 81 in app.js: `, response.data);
-                    // Empty the notes section
-                    $('#notes').empty();
-                });
-
-            // Also, remove the values entered in the input and textarea for note entry
-            $('#titleinput').val("");
-            $('#bodyinput').val("");
-        })
-
     })
 
+    $(document).on('click', '#savenote', function () {
+
+        let thisID = $(this).attr('data-id')
+
+        console.log(`this is the console log from the save button ${thisID}`);
+
+        axios.post(`/poems/${thisID}`, {
+            // Value taken from note textarea
+            title: $('#titleinput').val(),
+            // Value taken from note textarea
+            body: $('#bodyinput').val()
+        })
+            .then(function (response) {
+                // FIXME:This is not coming back how I expect.  I expect to see the note
+                console.log(`this is the axios.post on line 81 in app.js: `, response.data);
+                // Empty the notes section
+                $('#notes').empty();
+            });
+
+        // Also, remove the values entered in the input and textarea for note entry
+        $('#titleinput').val("");
+        $('#bodyinput').val("");
+    })
 })
 
 
