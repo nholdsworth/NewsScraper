@@ -11,7 +11,7 @@ const cheerio = require("cheerio");
 // Require all models
 const db = require("./models");
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // Initialize Express
 const app = express();
@@ -36,6 +36,7 @@ mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
 // A GET route for scraping the paris review website
 app.get("/scrape", function (req, res) {
+
     // First, we grab the body of the html with axios
     axios.get(`https://www.theparisreview.org/poetry`).then(function (response) {
         // console.log(response.data);
@@ -75,6 +76,8 @@ app.get("/scrape", function (req, res) {
                 .text();
 
             console.log(`This is your .each POEM object building function: `, poem);
+            
+            // TODO:create logic to see if this article already exists or not before creating an object in the database 
 
             // Create a new Article using the `result` object built from scraping
             db.Poem.create(poem)

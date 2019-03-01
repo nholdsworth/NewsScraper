@@ -1,39 +1,48 @@
 
 $(document).ready(function () {
 
-    $.getJSON('/poems', function (poemData) {
+    let poetryContainer = $(`.poetry-container`);
 
-        let allPoems = poemData.map(function (currentPoem) {
+    function initPage() {
 
-            console.log(currentPoem);
+        $.getJSON('/poems', function (poemData) {
+            poetryContainer.empty()
+            if ()
+            let allPoems = poemData.map(function (currentPoem) {
 
-            let title = $(`<h5 class="card-title"></h5>`)
-                .text(`Title: ${currentPoem.title}`);
+                console.log(currentPoem);
 
-            let titleLink = $(`<a href='https://www.theparisreview.org${currentPoem.link}'>`)
-                .append(title);
+                let title = $(`<h5 class="card-title"></h5>`)
+                    .text(`Title: ${currentPoem.title}`);
 
-            let author = $(`<h6 class="card-subtitle mb-2 text-muted"></h6>`)
-                .text(`${currentPoem.author}`);
+                let titleLink = $(`<a href='https://www.theparisreview.org${currentPoem.link}'>`)
+                    .append(title);
 
-            let excerpt = $(`<p class="card-text">`)
-                .text(currentPoem.excerpt);
+                let author = $(`<h6 class="card-subtitle mb-2 text-muted"></h6>`)
+                    .text(`${currentPoem.author}`);
 
-            let body = $(`<div class="card-body">`)
-                .append(titleLink, author, excerpt);
+                let excerpt = $(`<p class="card-text">`)
+                    .text(currentPoem.excerpt);
 
-            let id = currentPoem._id;
-            console.log(id);
+                let body = $(`<div class="card-body">`)
+                    .append(titleLink, author, excerpt);
 
-            let card = $(`<div class="card" style="width: 18rem;" data-id=${id}>`)
-                .append(body);
+                let id = currentPoem._id;
+                console.log(id);
 
-            $(`.poetry-container`)
-                .append(card);
+                let card = $(`<div class="card" style="width: 18rem;" data-id=${id}>`)
+                    .append(body);
 
-        })
+                $(`.poetry-container`)
+                    .append(card);
 
-    });
+            })
+
+        });
+
+    }
+
+
 
     $(document).on('click', '.card', function () {
 
@@ -55,12 +64,11 @@ $(document).ready(function () {
             // A button to submit a new note, with the id of the article saved to it
             $(".note-container").append("<button data-id='" + thisPoem._id + "' id='savenote'>Save Note</button>");
 
-            
+
             let poemNote = thisPoem.note;
             console.log(`this is poemNote = thisPoem.note checking to see if the poemNote variable is working:`, poemNote);
             // If there's a note in the article
             if (poemNote) {
-                // FIXME: this is coming back undfined
                 console.log(poemNote.title);
                 // Place the title of the note in the title input
                 $('#titleinput').val(poemNote.title);

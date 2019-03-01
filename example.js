@@ -41,14 +41,13 @@ $(document).ready(function () {
         // It constructs a jQuery element containing all of the formatted HTML for the
         // article card
         var card = $("<div class='card'>");
-        var cardHeader = $("<div class='card-header'>").append(
-            $("<h3>").append(
-                $("<a class='article-link' target='_blank' rel='noopener noreferrer'>")
+        var cardHeader = $("<div class='card-header'>")
+            .append($("<h3>")
+                .append($("<a class='article-link' target='_blank' rel='noopener noreferrer'>")
                     .attr("href", article.url)
-                    .text(article.headline),
-                $("<a class='btn btn-success save'>Save Article</a>")
-            )
-        );
+                    .text(article.headline), $("<a class='btn btn-success save'>Save Article</a>")
+                )
+            );
 
         var cardBody = $("<div class='card-body'>").text(article.summary);
 
